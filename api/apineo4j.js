@@ -14,24 +14,19 @@ app.set('views engine','ejs');
 
 app.get('/nom', function(req, res){
 	session
-		.run('MATCH (MC7UF1:MC7UF1) WHERE MC7UF1.nom = "Français" RETURN MC7UF1')
+		.run('MATCH (MC7UF1:UF) WHERE MC7UF1.idenseignant = 1 RETURN MC7UF1')
 		.then(function(result){
 			var estArray= [];
 			result.records.forEach(function(record){
 				estArray.push({
 					id : record._fields[0].properties.id,
 					nom : record._fields[0].properties.nom,
-					prenom : record._fields[0].properties.idenseignant
+					idenseignant : record._fields[0].properties.idenseignant
 				})
-				console.log(record._fields[0]);
-				console.log(record._fields[0].properties.id);
-				console.log(record._fields[0].identity.low);
-				console.log(record._fields[0]);
-				res.send(record._fields[0]);
-				return record._fields[0];
-				
+				console.log(record);
 			});
-			
+		
+			res.send(estArray);
 		
 		})
 		.catch(function(err){

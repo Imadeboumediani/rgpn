@@ -1,5 +1,5 @@
 import React from 'react';
-import {Component} from 'react';
+import { Component } from 'react';
 
 
 class Unitep extends Component {
@@ -7,90 +7,49 @@ class Unitep extends Component {
     loading: true,
     up: null,
   }
- async componentDidMount(){
+  async componentDidMount() {
     const url = "http://localhost:7552/nom";
     const response = await fetch(url);
     const data = await response.json();
-    this.setState({up : data.properties , loading : false})
-    console.log(data.properties);
-   
+    this.setState({ up: data, loading: false })
+    console.log(data);
+
   }
   render() {
-    console.log(this.state.up);
-      return (
-        <div>
-          {this.state.loading || !this.state.up ?
-          (<div> loading... </div> ) : 
+
+    var i = 0;
+    return (
+
+      <div>
+        <h1> Ajouter un Module de Formation</h1>
+        
+        {this.state.loading || !this.state.up ?
+          (<div> loading... </div>) :
           <div>
             <p>affichage up</p>
-            <div>{this.state.up.id}</div> 
-            <div>{this.state.up.nom}</div> 
-            <div>{this.state.up.idenseignant}</div> 
+            <form action="/action_page.php">
+            <p2> <b> <label htmlFor="nom"> Entrez le nom de l'unité de formation :</label> </b> </p2>
+          <input type="texte" id="nom" name="nom" />
+            <ul>
+              {this.state.up.map(item =>
+                <li key={item.id}>
+                 <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
+                 <label for="vehicle1">  {this.state.up[i++].nom}</label>
+                </li>
+              )}
+            </ul>
+            <input type="submit" value="Submit"/>
+            </form>
           </div>
         }
-          
-        </div>
-      );
-      /*
-    console.log("coucou")
-    console.log(this.state.post.properties.id)
-    return(
-      <main class="pa4 black-80">
-        {data.properties.id}
-      </main>
-    )*/
+
+      </div>
+
+
+    );
+    
+    
+
   }
 }
-export default Unitep ;
-/*class Unitep extends Component {
-
-    constructor(props) {
-      super(props);
-        this.state = {
-          items: [],
-          isLoaded: false,
-        }
-    }
-    componentDidMount(){
-      fetch ('http://localhost:7552/nom')
-        .then(res => res.json())
-        .then(json => {
-            this.setState({
-              isLoaded: true,
-              items : json,
-            })
-        });    
-    }
-
-    render(){
-      var { isLoaded, items} = this.state;
-      
-      if(!isLoaded){
-       // return <div>Loading...</div>;
-      }
-      else{
-        return(
-          <main class="pa4 black-80">
-            <div>
-              <ul>
-                {items.map(item => (
-                    <li>key={item.identity}>
-                      Nom : {item.nom}
-                    </li>
-                ))};
-              </ul>
-                
-             </div>
-            </main>
-        )
-      }
-    }
-}
-const Unitep = () => {
-    return(
-        <main class="pa4 black-80">
-  
-  </main>
-
-    )
-}*/
+export default Unitep;
