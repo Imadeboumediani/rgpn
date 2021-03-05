@@ -34,6 +34,13 @@ app.get('/nom', function(req, res){
 		});
 	
 });
+var str = "http://localhost:7552/post/?nom=fdsf&mf0=Fran%C3%A7ais&mf1=Anglais";
+var url = new URL(str);
+var search_params = new URLSearchParams(url.search);
+if(search_params.has('nom')) {
+	var name = search_params.get('nom');
+	console.log(name)
+  }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
