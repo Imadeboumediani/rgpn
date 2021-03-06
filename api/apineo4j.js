@@ -1,16 +1,20 @@
+
 var express = require('express');
 var path = require('path');
 var cors = require('cors')
 var bodyParser = require('body-parser');
 var app = express();
 var neo4j = require('neo4j-driver'); 
+const { response } = require('express');
 var driver = neo4j.driver('bolt://obiwan2.univ-brest.fr:7687', neo4j.auth.basic('neo4j', 'neo4j/'),
 { disableLosslessIntegers: true });
 const session = driver.session();
 app.use(cors());
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname,'views'));
-app.set('views engine','ejs');
+
 
 app.get('/nom', function(req, res){
 	session
@@ -34,17 +38,19 @@ app.get('/nom', function(req, res){
 		});
 	
 });
-var str = "http://localhost:7552/post/?nom=fdsf&mf0=Fran%C3%A7ais&mf1=Anglais";
-var url = new URL(str);
-var search_params = new URLSearchParams(url.search);
-if(search_params.has('nom')) {
-	var name = search_params.get('nom');
-	console.log(name)
-  }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
+app.post('/ajouter', (req,resp) => {
+	console.log('hello');
+	console.log(req.body.nom );
+	console.log(req.body.up.length)
+	const requete = 'CREATE (MC7MDL:MODULE {  idenseignant: 1 ,nom: "'+ req.body.nom +'"})';
+	console.log(requete);
+	session
+	.run(requete);
+	
+});		
+
+
 
 app.listen(7552);
 console.log('Server Started on Port 7552');

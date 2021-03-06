@@ -18,9 +18,25 @@ class Unitep extends Component {
     this.setState({ up: data, loading: false })
     console.log(data);
   }
- 
+ async postData(){
+    try{
+      const up = this.state.options;
+      const nom = this.state.nom;
+      const data = {up,nom}
+        let result = await fetch('http://localhost:7552/ajouter',{
+          method: 'post',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        console.log('Result:'+ result)
+    }catch(e){
+      console.log(e)
+    }
+  }
   render() {
-    console.log(this.state.itemChecked);
     var i = 0;
     var test ="mf" ;
     return (
@@ -43,27 +59,30 @@ class Unitep extends Component {
             
               {this.state.up.map(item =>
                 <li key={item.id}>
-                 <input  type="checkbox"  name={test+(i) }  value={this.state.up[i].nom} 
+                 <input  type="checkbox"  name={test+(i) }  value={i}  
                  
                  onChange={event => {
-                    let checked = event.target.checked; console.log(checked);
+                   console.log(i)
+                    let checked = event.target.checked; 
+                    console.log(event.target);
                     if(checked){
-                      this.state.options.push(this.state.up[item.id-1].nom)
+                      this.state.options.push(this.state.up[event.target.value].nom)
                     }
                     if(!checked){
-                      this.setState({options: this.state.options.filter(word => word === 'this.state.up[item.id-1].nom') })
-                      
+                      console.log(i)
+                      console.log('hello'+this.state.up[event.target.value].nom)
+                      this.setState({options: this.state.options.filter(word => word !== this.state.up[event.target.value].nom) })
+                     
                     }
-                    console.log(this.state.up[item.id-1].nom)
+                  
                     console.log(this.state.options)
-                    
                     }}
                  />
                   <label>   {'\u00A0'}  {this.state.up[i++].nom}  </label> 
                 </li>
               )}
             
-            <input type="submit" value="Submit" />
+            <button onClick={()=> this.postData()}> ajouter</button> 
             
           </div>
         }
