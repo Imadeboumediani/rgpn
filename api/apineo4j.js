@@ -106,7 +106,7 @@ app.get('/url', function (req, res) {
 
 });
 
-app.post('/AjouterUrl', async (req, resp) => {
+app.post('/AssocierUrl', async (req, resp) => {
 	console.log('hello');
 	console.log(req.body.nom);
 	console.log(req.body.urls.length);
@@ -151,6 +151,82 @@ app.post('/AjouterUrl', async (req, resp) => {
 	
 	resp.end();
 });
+
+
+app.post('/AjouterUrl', async (req, resp) => {
+	console.log('hello');
+	console.log(req.body.nomUrl);
+	
+	
+	var requete1 = 'CREATE (MC7URL:URL {	id: 1, lien:"'+ req.body.nomUrl+'" })';
+	console.log(requete1);
+	const session4 = driver.session();
+	await session4
+		.run(requete1)
+		.then(result => {
+			result.records.forEach(record => {
+			  console.log(record.get('MC7URL'))
+			})
+		  })
+		  .catch(error => {
+			console.log(error)
+		  })
+		  .then(() => session4.close())
+	
+	resp.json({
+		status: 'success',
+		message: 'l\'ajout a été realisé avec succes',
+	})
+	resp.end();
+});
+
+
+
+
+
+app.post('/cherchercd', async (req, resp) => {
+	console.log('hello');
+	console.log(req.body.keyword);
+	
+
+	var requete1 = 'MATCH (MC7CD:CD) where MC7CD.description contains "'+ req.body.keyword +'" return MC7CD ';
+	console.log(requete1);
+	var estArray = [];
+	const session5 = driver.session();
+	await session5
+		.run(requete1)
+		.then(result => {
+		
+			result.records.forEach(record => {
+				console.log(record._fields[0].properties.description)
+				estArray.push({
+					description: record._fields[0].properties.description,
+					
+				})
+			})
+		  })
+		  .catch(error => {
+			console.log(error)
+		  })
+		  .then(() => session5.close())
+console.log(estArray);
+	resp.json({
+		status: 'success',
+		message: 'voici le résultat de votre recherche',
+		tabCd: estArray,
+	})
+	
+	resp.end();
+});
+
+
+
+
+
+
+
+
+
 
 app.listen(7552);
 console.log('Server Started on Port 7552');
