@@ -106,7 +106,7 @@ app.get('/url', function (req, res) {
 
 });
 
-app.post('/AssocierUrl', async (req, resp) => {
+app.post('/AssocierUrl&Cd', async (req, resp) => {
 	console.log('hello');
 	console.log(req.body.nom);
 	console.log(req.body.urls.length);
@@ -144,6 +144,27 @@ app.post('/AssocierUrl', async (req, resp) => {
 		requete2 = '';
 
 	}
+
+	for (let i = 0; i < req.body.tabCd.length; i++) {
+		
+		let session6 = driver.session();
+		let requete6 = 'MATCH (MC7UF:UF) WHERE MC7UF.nom = "'+req.body.nom+'"  MATCH (MC7CD:CD) WHERE MC7CD.description = "'+req.body.tabCd[i].description+'"  CREATE (MC7UF)-[MCRELATION:MC7ESTDECRITE]->(MC7CD)  return MCRELATION ';
+		console.log(requete6);
+		await session6
+			.run(requete6)
+			.then(result => {
+				result.records.forEach(record => {
+				  console.log(record.get('MCRELATION'))
+				})
+			  })
+			  .catch(error => {
+				console.log(error)
+			  })
+			  .then(() => session6.close())
+		requete6 = '';
+
+	}
+	
 	resp.json({
 		status: 'success',
 		message: 'l\'ajout a été realisé avec succes',

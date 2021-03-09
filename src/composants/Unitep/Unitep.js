@@ -1,12 +1,16 @@
+import '../../App.css';
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from 'react';
+
 
 class UniteP extends Component {
 
   state = {
     liens: null,
     options: [],
-    optionsCd : [],
+    optionsCd: [],
     loading: true,
     up: null,
     nom: "",
@@ -32,8 +36,8 @@ class UniteP extends Component {
         const urls = this.state.options;
         const nom = this.state.nom;
         const tabCd = this.state.tabCd;
-        const data = { urls, nom , tabCd }
-        let result = await fetch('http://localhost:7552/AssocierUrl', {
+        const data = { urls, nom, tabCd }
+        let result = await fetch('http://localhost:7552/AssocierUrl&Cd', {
           method: 'post',
           mode: 'cors',
           headers: {
@@ -92,7 +96,7 @@ class UniteP extends Component {
           },
           body: JSON.stringify(data),
         })
-        
+
         const data4 = await result.json();
         console.log(data4);
         this.setState({ success: data4.status, message: data4.message });
@@ -109,7 +113,7 @@ class UniteP extends Component {
 
   render() {
     var i = 0;
-    var j=0;
+    var j = 0;
     var test = "mf";
     return (
 
@@ -181,7 +185,7 @@ class UniteP extends Component {
 
             }} />
             <button onClick={() => this.postData3()}> Chercher</button>
-            
+
             {this.state.tabCd.map(item =>
               <li key={item.description}>
                 <input type="checkbox" name={test + (j)} value={j}
@@ -217,6 +221,12 @@ class UniteP extends Component {
           </div>
         }
 
+
+        <div>
+          <Button onClick={(e) => {
+            e.preventDefault(); window.location.pathname = 'Accueil';
+          }} id="margin" variant="success">retour</Button>{' '}
+        </div>
       </div>
 
 
