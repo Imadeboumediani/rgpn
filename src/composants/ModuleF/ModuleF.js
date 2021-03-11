@@ -1,8 +1,9 @@
 import '../../App.css';
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from 'react';
+import Logo from '../Logo/Logo';
+
 
 class ModuleF extends Component {
 
@@ -52,13 +53,25 @@ class ModuleF extends Component {
     var i = 0;
     var test = "mf";
     return (
+      
+      <div class='ph5 flex flex-column cf pa5'>
+             <div>
+             <Logo class='db mw5 tc black link dim'/>
+                <div class=' w-30 fr'>
+                  <button  class="  f5 link dim br3 ph3 pv2 mb2 dib pv3-ns  dib white bg-dark-red" onClick={(e) => {  e.preventDefault();  window.location.pathname='Accueil';
+                }}   variant="success">retour </button>{' '}
+                </div>
+                </div>
 
-      <div>
-        <h1> Ajouter un Module de Formation</h1>
+                
+                
+   
+
+        <h2 class=" pa4 flex flex-column tc f9 f5-m f1 lh-copy fw5 black-90 mv9  "> Ajouter un Module de Formation</h2>
 
         {this.state.loading || !this.state.up ?
-          (<div> loading... </div>) :
-          <div>
+          (<div > loading... </div>) :
+          <div class='pa3 flex flex-column'> 
 
             {this.state.success === 'success' ?
               (<p> {this.state.message}</p>) :
@@ -66,18 +79,18 @@ class ModuleF extends Component {
 
             }
 
-            <p2> <b>  Entrez le nom de l'unité de formation : </b> </p2>
-            <input type="texte" value={this.state.name} name="nom" onChange={(data1) => {
+            <p2 class='pa2 f3 lh-copy'> <b>  Entrez le nom de l'unité de formation : </b> </p2>
+            <input class=" w-40 center pa2 input-reset ba bg-transparent hover-bg-black hover-black  " type="texte" value={this.state.name} name="nom" onChange={(data1) => {
               this.setState({ nom: data1.target.value })
 
 
               console.log(this.state.nom)
 
             }} />
-
+            <div class='ph3 flex flex-column cf pa3 center'>
             {this.state.up.map(item =>
-              <li key={item.id}>
-                <input type="checkbox" name={test + (i)} value={i}
+              <li key={item.id} class='tc flex items-center mb2 '>
+                <input class='mr2 ' type="checkbox" name={test + (i)} value={i}
 
                   onChange={event => {
                     console.log(i)
@@ -96,18 +109,15 @@ class ModuleF extends Component {
                     console.log(this.state.options)
                   }}
                 />
-                <label>   {'\u00A0'}  {this.state.up[i++].nom}  </label>
+                <label for="name" class="f6 b db mb2">   {'\u00A0'}  {this.state.up[i++].nom}  </label>
               </li>
             )}
-
-            <button onClick={() => this.postData()}> ajouter</button>
+           </div>
+           <button class=" w-20 center white b pv2 ph3 bg-green hover-bg-dark-green bn br2 hover-shadow-inner" onClick={() => this.postData()}> AJOUTER</button>
 
           </div>
         }
-          <div>
-                  <Button onClick={(e) => {  e.preventDefault();  window.location.pathname='Accueil';
-                }} id="margin" variant="success">retour</Button>{' '}
-                </div>
+          
       </div>
 
 

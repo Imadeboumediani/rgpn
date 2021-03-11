@@ -34,11 +34,11 @@ createTable = (i) => {
 
   for (let j = 0; j < this.state.up[i].length; j++) {
     let children = []
-    children.push(<p>- {this.state.up[i][j].nom}</p>)
-    table.push(<p>{children}</p>)
+    children.push(<p >- {this.state.up[i][j].nom}</p>)
+    table.push(<p >{children}</p>)
   }
   
-
+console.log(table);
 return table
 }
 
@@ -76,12 +76,12 @@ return table
 
     return (
 
-      <div>
-        <h1> Vos Unités d'enseignements</h1>
+      <div flex flex-column>
+        <h1 className ='f3 f2-m f1-l fw2 black-90 mv3'> Vos Unités d'enseignements</h1>
 
         {this.state.loading || !this.state.mf ?
           (<div> loading... </div>) :
-          <div>
+          <div  class="flex flex-column">
 
             {this.state.success === 'success' ?
               (<p> {this.state.message}</p>) :
@@ -91,10 +91,12 @@ return table
 
 
             {this.state.mf.map(item =>
-              <li key={item.nom} name={test + (i)} value={i} >
-               {this.state.mf[i++].nom}  {this.state.up[i-1].length === 0  ? (<p></p>) :  <table>
-                <p class = "a"> {this.createTable(i-1)} </p> 
-           </table>   }
+              <li className='f5 f4-m f3-l fw2 black-50 mt0 lh-copy' key={item.nom} name={test + (i)} value={i} >
+               {this.state.mf[i++].nom}  {this.state.up[i-1].length === 0  ? (<p></p>) : 
+                                                 <div >
+                                                 {console.log(i)}
+                                                       <p > {this.createTable(i-1)} </p> 
+                                                 </div>   }
                
               </li>
             )}
