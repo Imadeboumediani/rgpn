@@ -10,6 +10,7 @@ import Connexion from './composants/Connexion/Connexion';
 import ModuleF from './composants/ModuleF/ModuleF';
 import Accueil from './composants/Accueil/Accueil';
 import UniteP from './composants/UniteP/UniteP';
+import MesUF from './composants/MesUF/MesUF';
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/UniteP">
             <UniteP />
+          </Route>
+          <Route path="/MesUF">
+            <MesUF />
           </Route>
         </Switch>
       </Router>

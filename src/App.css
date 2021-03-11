@@ -23,6 +23,13 @@ div.a
   margin-bottom: 100px;
 }
 
+
+p.a {
+  
+ margin-left: 920px;
+/* margin is -0.5 * dimension */
+ }
+
 #margin
 {
     margin-left : 30px;
